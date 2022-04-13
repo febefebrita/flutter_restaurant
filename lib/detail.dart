@@ -44,7 +44,6 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen> {
       body: FutureBuilder<dynamic>(
           future: futureRestaurantDetail,
           builder: (context, snapshotDetail) {
-            print(snapshotDetail);
             if (snapshotDetail.hasData) {
               return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,6 +56,7 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen> {
                     Text(snapshotDetail.data!['city']),
                     Text(snapshotDetail.data!['address']),
                     Text(snapshotDetail.data!['description']),
+                    Text(snapshotDetail.data!['rating'].toString()),
                     Expanded(
                       child: ListView.separated(
                         scrollDirection: Axis.horizontal,
@@ -68,7 +68,15 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen> {
                         },
                       ),
                     ),
-                    //Double(doublesnapshotDetail.data!['rating']),
+                    Expanded(
+                        child: ListView.separated(
+                      separatorBuilder: (context, index) => const Divider(),
+                      itemCount: snapshotDetail.data!['menus']['foods'].length,
+                      itemBuilder: (context, idx) {
+                        return Text(snapshotDetail.data!['menus']['foods'][idx]
+                            ['name']);
+                      },
+                    ))
                   ]);
             } else if (snapshotDetail.hasError) {
               return Text('${snapshotDetail.error}');
