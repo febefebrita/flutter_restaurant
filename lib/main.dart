@@ -10,12 +10,8 @@ Future<List<dynamic>> fetchRestaurant() async {
       await http.get(Uri.parse("https://restaurant-api.dicoding.dev/list"));
 
   if (response.statusCode == 200) {
-    // If the server did return a 200 OK response,
-    // then parse the JSON.
     return jsonDecode(response.body)['restaurants'];
   } else {
-    // If the server did not return a 200 OK response,
-    // then throw an exception.
     throw Exception('Failed to load data');
   }
 }
@@ -31,11 +27,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Restaurant',
+      title: 'Restaurant VB',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Restaurant'),
+      home: const MyHomePage(title: 'Restaurant VB'),
     );
   }
 }
