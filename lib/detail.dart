@@ -41,43 +41,42 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          FutureBuilder<dynamic>(
-              future: futureRestaurantDetail,
-              builder: (context, snapshotDetail) {
-                print(snapshotDetail);
-                if (snapshotDetail.hasData) {
-                  return Column(children: [
+      body: FutureBuilder<dynamic>(
+          future: futureRestaurantDetail,
+          builder: (context, snapshotDetail) {
+            print(snapshotDetail);
+            if (snapshotDetail.hasData) {
+              return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
                     Text(snapshotDetail.data!['name']),
+                    Image.network(
+                        'https://restaurant-api.dicoding.dev/images/small/' +
+                            snapshotDetail.data!['pictureId']),
                     Text(snapshotDetail.data!['city']),
                     Text(snapshotDetail.data!['address']),
                     Text(snapshotDetail.data!['description']),
-                    Text(snapshotDetail.data!['categories'][0]['name']),
-                    // Flexible(
-                    //   child: ListView.builder(
-                    //     itemCount: 2,
-                    //     itemBuilder: (context, index) {
-                    //       return ListTile(
-                    //         title: Text(snapshotDetail.data!['categories']
-                    //             [index]['name']),
-                    //       );
-                    //     },
-                    //   ),
-                    // ),
+                    Expanded(
+                      child: ListView.separated(
+                        scrollDirection: Axis.horizontal,
+                        separatorBuilder: (context, index) => const Divider(),
+                        itemCount: snapshotDetail.data!['categories'].length,
+                        itemBuilder: (context, idx) {
+                          return Text(
+                              snapshotDetail.data!['categories'][idx]['name']);
+                        },
+                      ),
+                    ),
                     //Double(doublesnapshotDetail.data!['rating']),
                   ]);
-                } else if (snapshotDetail.hasError) {
-                  return Text('${snapshotDetail.error}');
-                }
+            } else if (snapshotDetail.hasError) {
+              return Text('${snapshotDetail.error}');
+            }
 
-                // By default, show a loading spinner.
-                return const CircularProgressIndicator();
-              }),
-        ],
-      ),
+            // By default, show a loading spinner.
+            return const CircularProgressIndicator();
+          }),
     );
   }
 }
