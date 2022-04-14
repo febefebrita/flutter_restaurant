@@ -46,6 +46,7 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen> {
           builder: (context, snapshotDetail) {
             if (snapshotDetail.hasData) {
               return SingleChildScrollView(
+                scrollDirection: Axis.vertical,
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
