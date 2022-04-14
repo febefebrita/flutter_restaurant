@@ -47,40 +47,46 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen> {
             if (snapshotDetail.hasData) {
               return SingleChildScrollView(
                 scrollDirection: Axis.vertical,
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Text(snapshotDetail.data!['name']),
-                      Image.network(
-                          'https://restaurant-api.dicoding.dev/images/small/' +
-                              snapshotDetail.data!['pictureId']),
-                      Text(snapshotDetail.data!['city']),
-                      Text(snapshotDetail.data!['address']),
-                      Text(snapshotDetail.data!['description']),
-                      Text(snapshotDetail.data!['rating'].toString()),
-                      Expanded(
-                        child: ListView.separated(
-                          scrollDirection: Axis.horizontal,
-                          separatorBuilder: (context, index) => const Divider(),
-                          itemCount: snapshotDetail.data!['categories'].length,
-                          itemBuilder: (context, idx) {
-                            return Text(snapshotDetail.data!['categories'][idx]
-                                ['name']);
-                          },
-                        ),
-                      ),
-                      Expanded(
+                child: Container(
+                  height: 500,
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Text(snapshotDetail.data!['name']),
+                        Image.network(
+                            'https://restaurant-api.dicoding.dev/images/small/' +
+                                snapshotDetail.data!['pictureId']),
+                        Text(snapshotDetail.data!['city']),
+                        Text(snapshotDetail.data!['address']),
+                        Text(snapshotDetail.data!['description']),
+                        Text(snapshotDetail.data!['rating'].toString()),
+                        Expanded(
                           child: ListView.separated(
-                        separatorBuilder: (context, index) => const Divider(),
-                        itemCount:
-                            snapshotDetail.data!['menus']['foods'].length,
-                        itemBuilder: (context, idx) {
-                          return Text(snapshotDetail.data!['menus']['foods']
-                              [idx]['name']);
-                        },
-                      ))
-                    ]),
+                            scrollDirection: Axis.horizontal,
+                            separatorBuilder: (context, index) =>
+                                const Divider(),
+                            itemCount:
+                                snapshotDetail.data!['categories'].length,
+                            itemBuilder: (context, idx) {
+                              return Text(snapshotDetail.data!['categories']
+                                  [idx]['name']);
+                            },
+                          ),
+                        ),
+                        Expanded(
+                            child: ListView.separated(
+                          separatorBuilder: (context, index) => const Divider(),
+                          itemCount:
+                              snapshotDetail.data!['menus']['foods'].length,
+                          itemBuilder: (context, idx) {
+                            return Text(snapshotDetail.data!['menus']['foods']
+                                [idx]['name']);
+                          },
+                        )),
+                        const SizedBox(height: 500)
+                      ]),
+                ),
               );
             } else if (snapshotDetail.hasError) {
               return Text('${snapshotDetail.error}');
